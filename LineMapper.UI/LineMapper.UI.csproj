@@ -6,6 +6,11 @@
 
     <ItemGroup>
       <ProjectReference Include="..\LineMapper.Model\LineMapper.Model.csproj" />
+      <ProjectReference Include="..\LineMapper.Rendering\LineMapper.Rendering.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Bearded.UI" Version="0.1.55-dev" />
     </ItemGroup>
 
 </Project>

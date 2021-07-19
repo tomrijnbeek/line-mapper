@@ -4,7 +4,7 @@ using LineMapper.Rendering.Rendering;
 
 namespace LineMapper.Rendering.Drawers
 {
-    sealed class LineDrawer
+    public sealed class LineDrawer
     {
         private readonly CoreDrawers coreDrawers;
 

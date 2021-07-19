@@ -10,12 +10,23 @@ namespace LineMapper.Rendering.Rendering
         public ExpandingIndexedTrianglesMeshBuilder<ColorVertexData> Primitives { get; } = new();
         public IRenderer PrimitivesRenderer { get; }
 
-        public CoreRenderers(CoreShaders shaders)
+        public CoreRenderers(CoreShaders shaders, SharedRenderSettings renderSettings)
         {
             var geometryShader = shaders.GetRendererShader("geometry");
 
-            PrimitivesRenderer = BatchedRenderer.From(Primitives.ToRenderable());
+            PrimitivesRenderer = BatchedRenderer.From(
+                Primitives.ToRenderable(), renderSettings.ViewMatrix, renderSettings.ProjectionMatrix);
             geometryShader.UseOnRenderer(PrimitivesRenderer);
+        }
+
+        public void RenderAll()
+        {
+            PrimitivesRenderer.Render();
+        }
+
+        public void ClearAll()
+        {
+            Primitives.Clear();
         }
     }
 }
