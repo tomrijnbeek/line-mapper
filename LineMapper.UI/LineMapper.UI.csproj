@@ -13,4 +13,13 @@
       <PackageReference Include="Bearded.Graphics" Version="0.1.0-dev.1" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Update="Shaders\**\*.fs">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="Shaders\**\*.vs">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
 </Project>
