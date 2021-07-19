@@ -15,11 +15,12 @@ namespace LineMapper.Model.Layout
             return lines.Select(layOutLine).ToImmutableArray();
         }
 
-        private static LaidOutLine layOutLine(Line line) => new(createLineSegments(line).ToImmutableArray());
+        private static LaidOutLine layOutLine(Line line) =>
+            new(line.Color, createLineSegments(line).ToImmutableArray());
 
         private static IEnumerable<LineSegment> createLineSegments(Line line)
         {
-            var (_, nodes) = line;
+            var nodes = line.Nodes;
             for (var i = 0; i < nodes.Length - 1; i++)
             {
                 var isFirstSegment = i == 0;

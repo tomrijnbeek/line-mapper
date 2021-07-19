@@ -1,7 +1,7 @@
 using System.Collections.Immutable;
+using Bearded.Graphics;
 
 namespace LineMapper.Model.Layout
 {
-    // TODO: add color
-    public sealed record LaidOutLine(ImmutableArray<LineSegment> Segments);
+    public sealed record LaidOutLine(Color Color, ImmutableArray<LineSegment> Segments);
 }

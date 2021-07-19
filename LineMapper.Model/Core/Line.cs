@@ -1,7 +1,7 @@
 using System.Collections.Immutable;
+using Bearded.Graphics;
 
 namespace LineMapper.Model
 {
-    // TODO: add color
-    public sealed record Line(string Name, ImmutableArray<INode> Nodes);
+    public sealed record Line(string Name, Color Color, ImmutableArray<INode> Nodes);
 }
