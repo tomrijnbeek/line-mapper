@@ -2,7 +2,7 @@ using System;
 using Bearded.Graphics;
 using Bearded.Graphics.Windowing;
 using Bearded.Utilities.IO;
-using LineMapper.UI.Rendering;
+using LineMapper.Rendering.Rendering;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;

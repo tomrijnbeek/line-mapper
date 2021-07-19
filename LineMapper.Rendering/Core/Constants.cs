@@ -1,4 +1,4 @@
-namespace LineMapper.UI
+namespace LineMapper.Rendering
 {
     static class Constants
     {

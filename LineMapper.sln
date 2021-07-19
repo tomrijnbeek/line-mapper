@@ -4,7 +4,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LineMapper", "LineMapper\Li
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LineMapper.Model", "LineMapper.Model\LineMapper.Model.csproj", "{E9E99890-BDDB-4CF3-9606-D81CB2195006}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LineMapper.UI", "LineMapper.UI\LineMapper.UI.csproj", "{89301455-EE1A-497B-951F-6FAA8169709A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LineMapper.Rendering", "LineMapper.Rendering\LineMapper.Rendering.csproj", "{89301455-EE1A-497B-951F-6FAA8169709A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

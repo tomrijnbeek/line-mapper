@@ -1,9 +1,9 @@
 using Bearded.Graphics.MeshBuilders;
 using Bearded.Graphics.Rendering;
 using Bearded.Graphics.Shapes;
-using LineMapper.UI.Shaders;
+using LineMapper.Rendering.Shaders;
 
-namespace LineMapper.UI.Rendering
+namespace LineMapper.Rendering.Rendering
 {
     public sealed class CoreRenderers
     {

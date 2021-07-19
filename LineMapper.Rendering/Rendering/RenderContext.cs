@@ -1,6 +1,6 @@
-using LineMapper.UI.Shaders;
+using LineMapper.Rendering.Shaders;
 
-namespace LineMapper.UI.Rendering
+namespace LineMapper.Rendering.Rendering
 {
     public sealed class RenderContext
     {

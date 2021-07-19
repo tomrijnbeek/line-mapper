@@ -1,8 +1,8 @@
 using Bearded.Graphics.Shapes;
 using LineMapper.Model.Layout;
-using LineMapper.UI.Rendering;
+using LineMapper.Rendering.Rendering;
 
-namespace LineMapper.UI.Drawers
+namespace LineMapper.Rendering.Drawers
 {
     sealed class LineDrawer
     {

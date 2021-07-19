@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using Bearded.Graphics.ShaderManagement;
 
-namespace LineMapper.UI.Shaders
+namespace LineMapper.Rendering.Shaders
 {
     public sealed class CoreShaders
     {

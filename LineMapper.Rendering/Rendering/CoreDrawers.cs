@@ -1,7 +1,7 @@
 using Bearded.Graphics;
 using Bearded.Graphics.Shapes;
 
-namespace LineMapper.UI.Rendering
+namespace LineMapper.Rendering.Rendering
 {
     public sealed class CoreDrawers
     {
