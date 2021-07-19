@@ -9,4 +9,8 @@
       <ProjectReference Include="..\LineMapper.Model\LineMapper.Model.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="Bearded.Graphics" Version="0.1.0-dev.1" />
+    </ItemGroup>
+
 </Project>
