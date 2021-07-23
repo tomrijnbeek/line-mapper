@@ -1,16 +1,20 @@
+using Bearded.Utilities.IO;
 using OpenTK.Mathematics;
 
 namespace LineMapper.Rendering.Rendering
 {
     public sealed class Camera
     {
+        private readonly Logger logger;
+        private readonly float scale = 1;
         private CenterAndSize visibleArea;
 
         private Matrix4 view;
         private Matrix4 projection;
 
-        public Camera()
+        public Camera(Logger logger)
         {
+            this.logger = logger;
             visibleArea = new CenterAndSize(0, 0, 1280, 720);
             recalculateView();
             recalculateProjection();
@@ -18,10 +22,9 @@ namespace LineMapper.Rendering.Rendering
 
         public void ResizeViewport(Vector2i size)
         {
-            var viewportAspectRatioInverse = (float) size.Y / size.X;
-            var newVisibleAreaHeight = viewportAspectRatioInverse * visibleArea.Size.X;
-            visibleArea =
-                new CenterAndSize(visibleArea.Center, new Vector2(visibleArea.Size.X, newVisibleAreaHeight));
+            logger.Trace?.Log($"Resizing viewport to {size}");
+
+            visibleArea = new CenterAndSize(visibleArea.Center, size.ToVector2() / scale);
             recalculateProjection();
         }
 

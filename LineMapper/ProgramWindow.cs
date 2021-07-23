@@ -7,7 +7,6 @@ using Bearded.Utilities.IO;
 using LineMapper.Rendering.Rendering;
 using LineMapper.UI;
 using LineMapper.UI.Controls;
-using OpenTK.Graphics.OpenGL;
 using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Desktop;
@@ -46,12 +45,12 @@ namespace LineMapper
             rootControl = new RootControl();
             rootControl.Add(new LayoutControl());
 
-            camera = new Camera();
+            camera = new Camera(logger);
         }
 
         protected override void OnResize(ResizeEventArgs eventArgs)
         {
-            GL.Viewport(0, 0, eventArgs.Width, eventArgs.Height);
+            renderContext.Compositor.SetViewport(eventArgs.Size);
             rootControl.SetViewport(eventArgs.Width, eventArgs.Height, 1);
             camera.ResizeViewport(eventArgs.Size);
         }
