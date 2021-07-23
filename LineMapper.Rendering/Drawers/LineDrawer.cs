@@ -51,12 +51,12 @@ namespace LineMapper.Rendering.Drawers
             var fromDirection = from.Direction;
             var toDirection = to.Direction;
 
-            var difference = fromDirection - toDirection;
+            var difference = toDirection - fromDirection;
 
             if (difference > Angle.Zero)
             {
-                var r1 = Ray2.WithoutNormalizing(from.End.NumericValue, fromDirection.Vector.PerpendicularRight);
-                var r2 = Ray2.WithoutNormalizing(to.Start.NumericValue, toDirection.Vector.PerpendicularRight);
+                var r1 = Ray2.WithoutNormalizing(from.End.NumericValue, fromDirection.Vector.PerpendicularLeft);
+                var r2 = Ray2.WithoutNormalizing(to.Start.NumericValue, toDirection.Vector.PerpendicularLeft);
 
                 if (Intersect2.Intersect(r1, r2, out var i))
                 {
@@ -64,10 +64,10 @@ namespace LineMapper.Rendering.Drawers
                     return true;
                 }
             }
-            else
+            else if (difference < Angle.Zero)
             {
-                var r1 = Ray2.WithoutNormalizing(from.End.NumericValue, fromDirection.Vector.PerpendicularLeft);
-                var r2 = Ray2.WithoutNormalizing(to.Start.NumericValue, toDirection.Vector.PerpendicularLeft);
+                var r1 = Ray2.WithoutNormalizing(from.End.NumericValue, fromDirection.Vector.PerpendicularRight);
+                var r2 = Ray2.WithoutNormalizing(to.Start.NumericValue, toDirection.Vector.PerpendicularRight);
 
                 if (Intersect2.Intersect(r1, r2, out var i))
                 {
