@@ -37,10 +37,13 @@ namespace LineMapper.Rendering.Drawers
                 var spokeFrom = from.End - center;
                 var spokeTo = to.Start - center;
 
+                var arcStart = Direction2.Of(spokeFrom.NumericValue);
+                var arcSize = Angle.Between(spokeTo.NumericValue, spokeFrom.NumericValue);
+
                 coreDrawers.Arcs.DrawArc(
                     center.NumericValue,
-                    Direction2.Of(spokeFrom.NumericValue).Radians,
-                    Direction2.Of(spokeTo.NumericValue).Radians,
+                    arcStart.Radians,
+                    arcStart.Radians + arcSize.Radians,
                     spokeFrom.Length.NumericValue + 0.5f * Model.Constants.LineWidth,
                     Model.Constants.LineWidth, line.Color, Constants.NumArcSections);
             }
