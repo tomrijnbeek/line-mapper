@@ -10,6 +10,11 @@ namespace LineMapper.Model.Layout
 {
     public sealed class LimitedDirectionLayoutBuilder : ILayoutBuilder
     {
+        public static readonly ImmutableArray<Direction2> OctagonalDirections =
+            Enumerable.Range(0, 8).Select(i => Direction2.FromDegrees(i * 45)).ToImmutableArray();
+        public static readonly ImmutableArray<Direction2> Hexagonal =
+            Enumerable.Range(0, 6).Select(i => Direction2.FromDegrees(i * 60)).ToImmutableArray();
+
         private static readonly Angle epsilonAngle = Angle.FromRadians(0.01f);
 
         private readonly ImmutableArray<Direction2> directions;
