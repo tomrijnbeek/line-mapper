@@ -48,7 +48,6 @@ namespace LineMapper.UI.Controls
 
             var lines = ImmutableArray.Create(aLine, bLine, cLine, dLine);
 
-            //var layoutBuilder = new DirectLineLayoutBuilder();
             var layoutBuilder = new LimitedDirectionLayoutBuilder(ImmutableArray.Create(
                 Direction2.FromDegrees(0), Direction2.FromDegrees(45),
                 Direction2.FromDegrees(90), Direction2.FromDegrees(135),

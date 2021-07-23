@@ -10,6 +10,8 @@ namespace LineMapper.Rendering.Drawers
 {
     public sealed class LineDrawer
     {
+        private static readonly Angle epsilonAngle = Angle.FromRadians(0.01f);
+
         private readonly CoreDrawers coreDrawers;
 
         public LineDrawer(CoreDrawers coreDrawers)
@@ -31,7 +33,7 @@ namespace LineMapper.Rendering.Drawers
                 {
                     coreDrawers.Primitives.DrawLine(
                         from.End.NumericValue, to.Start.NumericValue, Model.Constants.LineWidth, line.Color);
-                    return;
+                    continue;
                 }
 
                 var spokeFrom = from.End - center;
@@ -56,7 +58,7 @@ namespace LineMapper.Rendering.Drawers
 
             var difference = toDirection - fromDirection;
 
-            if (difference > Angle.Zero)
+            if (difference > epsilonAngle)
             {
                 var r1 = Ray2.WithoutNormalizing(from.End.NumericValue, fromDirection.Vector.PerpendicularLeft);
                 var r2 = Ray2.WithoutNormalizing(to.Start.NumericValue, toDirection.Vector.PerpendicularLeft);
@@ -67,7 +69,7 @@ namespace LineMapper.Rendering.Drawers
                     return true;
                 }
             }
-            else if (difference < Angle.Zero)
+            else if (difference < -epsilonAngle)
             {
                 var r1 = Ray2.WithoutNormalizing(from.End.NumericValue, fromDirection.Vector.PerpendicularRight);
                 var r2 = Ray2.WithoutNormalizing(to.Start.NumericValue, toDirection.Vector.PerpendicularRight);
