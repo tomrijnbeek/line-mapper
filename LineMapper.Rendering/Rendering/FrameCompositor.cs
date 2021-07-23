@@ -15,9 +15,11 @@ namespace LineMapper.Rendering.Rendering
 
         public void PrepareForFrame()
         {
-            var argb = Color.Black;
+            var argb = Color.White;
             GL.ClearColor(argb.R / 255f, argb.G / 255f, argb.B / 255f, 1);
             GL.Clear(ClearBufferMask.ColorBufferBit);
+
+            GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
 
             GL.Viewport(0, 0, viewportSize.X, viewportSize.Y);
         }

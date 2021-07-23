@@ -30,11 +30,13 @@ namespace LineMapper
         protected override NativeWindowSettings GetSettings() =>
             new()
             {
+                // TODO: consider event driven window
                 API = ContextAPI.OpenGL,
                 APIVersion = new Version(3, 2),
                 Size = new Vector2i(1280, 720),
                 Title = "Line Mapper",
-                WindowState = WindowState.Normal
+                WindowState = WindowState.Normal,
+                NumberOfSamples = 8,
             };
 
         protected override void OnLoad()
