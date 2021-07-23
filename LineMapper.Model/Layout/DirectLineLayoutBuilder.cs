@@ -1,14 +1,11 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
-using Bearded.Utilities.SpaceTime;
 
 namespace LineMapper.Model.Layout
 {
     public sealed class DirectLineLayoutBuilder : ILayoutBuilder
     {
-        private static readonly Unit arcRadius = (3 * Constants.LineWidth).U();
-
         // TODO: return an intermediate result that allows for partial recalculation
         public ImmutableArray<LaidOutLine> LayOutLines(IEnumerable<Line> lines)
         {
@@ -35,7 +32,7 @@ namespace LineMapper.Model.Layout
                 var segmentEnd = isLastSegment ? end : end - offsetForArc;
 
                 // TODO: this will give weird results if the line segment is shorter than 2 * arcRadius
-                yield return new LineSegment(start + offsetForArc, end - offsetForArc);
+                yield return new LineSegment(segmentStart, segmentEnd);
             }
         }
     }

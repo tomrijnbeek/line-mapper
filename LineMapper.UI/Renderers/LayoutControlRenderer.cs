@@ -23,10 +23,10 @@ namespace LineMapper.UI.Renderers
                 lineDrawer.DrawLine(line);
             }
 
-            foreach (var point in control.Points)
-            {
-                stationDrawer.DrawStation(point);
-            }
+            // foreach (var point in control.Points)
+            // {
+            //     stationDrawer.DrawStation(point);
+            // }
         }
     }
 }
