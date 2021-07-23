@@ -5,7 +5,6 @@ using Bearded.Utilities.SpaceTime;
 using LineMapper.Model.Layout;
 using LineMapper.Rendering.Helpers;
 using LineMapper.Rendering.Rendering;
-using OpenTK.Mathematics;
 
 namespace LineMapper.Rendering.Drawers
 {

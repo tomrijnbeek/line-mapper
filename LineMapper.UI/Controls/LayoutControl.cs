@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Linq;
 using Bearded.Graphics;
 using Bearded.UI.Controls;
 using Bearded.UI.Rendering;
@@ -11,6 +12,7 @@ namespace LineMapper.UI.Controls
 {
     public sealed class LayoutControl : CompositeControl
     {
+        public IEnumerable<Point> Points { get; }
         public IEnumerable<LaidOutLine> LaidOutLines { get; }
 
         public LayoutControl()
@@ -32,6 +34,11 @@ namespace LineMapper.UI.Controls
             var d2 = a4;
             var d3 = a3;
             var d4 = new Point("D4", new Position2(0, -300));
+
+            Points = ImmutableArray
+                .Create(a1, a2, a3, a4, a5, b1, b2, b3, b4, c1, c2, c3, c4, d1, d2, d3, d4)
+                .Distinct()
+                .ToImmutableArray();
 
             var aLine = new Line("A", Color.Red, ImmutableArray.Create<INode>(a1, a2, a3, a4, a5));
             var bLine = new Line("B", Color.Blue, ImmutableArray.Create<INode>(b1, b2, b3, b4));
