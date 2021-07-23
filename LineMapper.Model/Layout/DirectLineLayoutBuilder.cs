@@ -29,7 +29,7 @@ namespace LineMapper.Model.Layout
                 var start = nodes[i].Position;
                 var end = nodes[i + 1].Position;
                 var difference = end - start;
-                var offsetForArc = difference * (arcRadius / difference.Length);
+                var offsetForArc = difference * (Constants.StationRadius / difference.Length);
 
                 var segmentStart = isFirstSegment ? start : start + offsetForArc;
                 var segmentEnd = isLastSegment ? end : end - offsetForArc;
