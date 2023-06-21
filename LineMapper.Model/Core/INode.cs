@@ -1,9 +1,8 @@
 using Bearded.Utilities.SpaceTime;
 
-namespace LineMapper.Model
+namespace LineMapper.Model;
+
+public interface INode
 {
-    public interface INode
-    {
-        Position2 Position { get; }
-    }
+    Position2 Position { get; }
 }

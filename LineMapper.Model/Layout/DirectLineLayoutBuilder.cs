@@ -2,38 +2,37 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 
-namespace LineMapper.Model.Layout
+namespace LineMapper.Model.Layout;
+
+public sealed class DirectLineLayoutBuilder : ILayoutBuilder
 {
-    public sealed class DirectLineLayoutBuilder : ILayoutBuilder
+    // TODO: return an intermediate result that allows for partial recalculation
+    public ImmutableArray<LaidOutLine> LayOutLines(IEnumerable<Line> lines)
     {
-        // TODO: return an intermediate result that allows for partial recalculation
-        public ImmutableArray<LaidOutLine> LayOutLines(IEnumerable<Line> lines)
+        return lines.Select(layOutLine).ToImmutableArray();
+    }
+
+    private static LaidOutLine layOutLine(Line line) =>
+        new(line.Color, createLineSegments(line).ToImmutableArray());
+
+    private static IEnumerable<LineSegment> createLineSegments(Line line)
+    {
+        var nodes = line.Nodes;
+        for (var i = 0; i < nodes.Length - 1; i++)
         {
-            return lines.Select(layOutLine).ToImmutableArray();
-        }
+            var isFirstSegment = i == 0;
+            var isLastSegment = i == nodes.Length - 2;
 
-        private static LaidOutLine layOutLine(Line line) =>
-            new(line.Color, createLineSegments(line).ToImmutableArray());
+            var start = nodes[i].Position;
+            var end = nodes[i + 1].Position;
+            var difference = end - start;
+            var offsetForArc = difference * (Constants.StationRadius / difference.Length);
 
-        private static IEnumerable<LineSegment> createLineSegments(Line line)
-        {
-            var nodes = line.Nodes;
-            for (var i = 0; i < nodes.Length - 1; i++)
-            {
-                var isFirstSegment = i == 0;
-                var isLastSegment = i == nodes.Length - 2;
+            var segmentStart = isFirstSegment ? start : start + offsetForArc;
+            var segmentEnd = isLastSegment ? end : end - offsetForArc;
 
-                var start = nodes[i].Position;
-                var end = nodes[i + 1].Position;
-                var difference = end - start;
-                var offsetForArc = difference * (Constants.StationRadius / difference.Length);
-
-                var segmentStart = isFirstSegment ? start : start + offsetForArc;
-                var segmentEnd = isLastSegment ? end : end - offsetForArc;
-
-                // TODO: this will give weird results if the line segment is shorter than 2 * arcRadius
-                yield return new LineSegment(segmentStart, segmentEnd);
-            }
+            // TODO: this will give weird results if the line segment is shorter than 2 * arcRadius
+            yield return new LineSegment(segmentStart, segmentEnd);
         }
     }
 }

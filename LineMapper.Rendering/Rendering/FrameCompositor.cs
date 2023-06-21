@@ -2,28 +2,27 @@ using Bearded.Graphics;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Mathematics;
 
-namespace LineMapper.Rendering.Rendering
+namespace LineMapper.Rendering.Rendering;
+
+public sealed class FrameCompositor
 {
-    public sealed class FrameCompositor
+    private Vector2i viewportSize;
+
+    public void SetViewport(Vector2i viewport)
     {
-        private Vector2i viewportSize;
-
-        public void SetViewport(Vector2i viewport)
-        {
-            viewportSize = viewport;
-        }
-
-        public void PrepareForFrame()
-        {
-            var argb = Color.White;
-            GL.ClearColor(argb.R / 255f, argb.G / 255f, argb.B / 255f, 1);
-            GL.Clear(ClearBufferMask.ColorBufferBit);
-
-            GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
-
-            GL.Viewport(0, 0, viewportSize.X, viewportSize.Y);
-        }
-
-        public void FinalizeFrame() {}
+        viewportSize = viewport;
     }
+
+    public void PrepareForFrame()
+    {
+        var argb = Color.White;
+        GL.ClearColor(argb.R / 255f, argb.G / 255f, argb.B / 255f, 1);
+        GL.Clear(ClearBufferMask.ColorBufferBit);
+
+        GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
+
+        GL.Viewport(0, 0, viewportSize.X, viewportSize.Y);
+    }
+
+    public void FinalizeFrame() {}
 }

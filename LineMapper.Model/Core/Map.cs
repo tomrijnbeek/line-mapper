@@ -1,15 +1,14 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
 
-namespace LineMapper.Model
+namespace LineMapper.Model;
+
+public sealed class Map
 {
-    public sealed class Map
-    {
-        private readonly List<Point> points = new();
-        private readonly List<Line> line = new();
+    private readonly List<Point> points = new();
+    private readonly List<Line> line = new();
 
-        public record PointWithAdjacencies(Point Point, ImmutableArray<PointAdjacency> Adjacencies);
+    public record PointWithAdjacencies(Point Point, ImmutableArray<PointAdjacency> Adjacencies);
 
-        public record PointAdjacency(Point Opposite, Line Line);
-    }
+    public record PointAdjacency(Point Opposite, Line Line);
 }

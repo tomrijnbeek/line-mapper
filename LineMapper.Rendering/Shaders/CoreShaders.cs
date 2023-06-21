@@ -2,36 +2,35 @@ using System;
 using System.IO;
 using Bearded.Graphics.ShaderManagement;
 
-namespace LineMapper.Rendering.Shaders
+namespace LineMapper.Rendering.Shaders;
+
+public sealed class CoreShaders
 {
-    public sealed class CoreShaders
+    public static CoreShaders Load()
     {
-        public static CoreShaders Load()
-        {
-            var workingDir = Directory.GetCurrentDirectory() + "/";
-            var shadersDir = workingDir + "Shaders/";
+        var workingDir = Directory.GetCurrentDirectory() + "/";
+        var shadersDir = workingDir + "Shaders/";
 
-            var shaderFiles = ShaderFileLoader.CreateDefault(shadersDir).Load(".");
-            var shaders = new ShaderManager();
-            shaders.AddRange(shaderFiles);
+        var shaderFiles = ShaderFileLoader.CreateDefault(shadersDir).Load(".");
+        var shaders = new ShaderManager();
+        shaders.AddRange(shaderFiles);
 
-            shaders.RegisterRendererShaderFromAllShadersWithName("geometry");
+        shaders.RegisterRendererShaderFromAllShadersWithName("geometry");
 
-            return new CoreShaders(shaders);
-        }
+        return new CoreShaders(shaders);
+    }
 
-        private readonly ShaderManager shaders;
+    private readonly ShaderManager shaders;
 
-        private CoreShaders(ShaderManager shaders)
-        {
-            this.shaders = shaders;
-        }
+    private CoreShaders(ShaderManager shaders)
+    {
+        this.shaders = shaders;
+    }
 
-        public IRendererShader GetRendererShader(string name)
-        {
-            return shaders.TryGetRendererShader(name, out var program)
-                ? program
-                : throw new ArgumentException($"Shader {name} not found.", nameof(name));
-        }
+    public IRendererShader GetRendererShader(string name)
+    {
+        return shaders.TryGetRendererShader(name, out var program)
+            ? program
+            : throw new ArgumentException($"Shader {name} not found.", nameof(name));
     }
 }
