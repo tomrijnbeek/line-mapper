@@ -4,7 +4,6 @@ using System.Linq;
 using Bearded.Graphics;
 using Bearded.UI.Controls;
 using Bearded.UI.Rendering;
-using Bearded.Utilities.Geometry;
 using Bearded.Utilities.SpaceTime;
 using LineMapper.Model;
 using LineMapper.Model.Layout;
@@ -48,7 +47,7 @@ namespace LineMapper.UI.Controls
 
             var lines = ImmutableArray.Create(aLine, bLine, cLine, dLine);
 
-            var layoutBuilder = new LimitedDirectionLayoutBuilder(LimitedDirectionLayoutBuilder.Hexagonal);
+            var layoutBuilder = new LimitedDirectionLayoutBuilder(LimitedDirectionLayoutBuilder.OctagonalDirections);
             LaidOutLines = layoutBuilder.LayOutLines(lines);
         }
 
