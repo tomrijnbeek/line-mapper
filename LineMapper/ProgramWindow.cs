@@ -66,9 +66,16 @@ sealed class ProgramWindow : Window
         camera.ResizeViewport(eventArgs.Size);
     }
 
+    protected override void OnUpdateUIThread()
+    {
+        inputManager.ProcessEventsAsync();
+    }
+
     protected override void OnUpdate(UpdateEventArgs e)
     {
-        inputManager.Update(true);
+#pragma warning disable CS0618
+        inputManager.Update(NativeWindow.IsFocused);
+#pragma warning restore CS0618
         eventManager.Update();
     }
 
