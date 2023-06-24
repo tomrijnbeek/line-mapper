@@ -14,11 +14,11 @@ public sealed class StationDrawer
         this.coreDrawers = coreDrawers;
     }
 
-    public void DrawStation(Point point)
+    public void DrawStation(Point point, bool isActive)
     {
         coreDrawers.Primitives.FillCircle(
             point.Position.NumericValue, Model.Constants.StationRadius.NumericValue, Color.Black);
         coreDrawers.Primitives.FillCircle(
-            point.Position.NumericValue, Model.Constants.InnerStationRadius.NumericValue, Color.White);
+            point.Position.NumericValue, Model.Constants.InnerStationRadius.NumericValue, isActive ? Color.Yellow : Color.White);
     }
 }

@@ -1,4 +1,3 @@
-using System;
 using Bearded.Utilities.IO;
 using Bearded.Utilities.SpaceTime;
 using OpenTK.Mathematics;
@@ -28,6 +27,7 @@ public sealed class Camera : IMousePositionTransform
     {
         logger.Trace?.Log($"Resizing viewport to {size}");
 
+        viewportSize = size;
         visibleArea = new CenterAndSize(visibleArea.Center, size.ToVector2() / scale);
         recalculateProjection();
     }
@@ -58,11 +58,10 @@ public sealed class Camera : IMousePositionTransform
         var viewInverted = view.Inverted();
 
         var normalizedMousePosition = new Vector3(
-            2 * (float) mousePosition.X / viewportSize.X - 1, 2 * (float) mousePosition.Y / viewportSize.Y - 1, 0);
+            2 * (float) mousePosition.X / viewportSize.X - 1, -2 * (float) mousePosition.Y / viewportSize.Y + 1, 0);
         var unprojectedMousePosition = Vector3.TransformPerspective(normalizedMousePosition, projectionInverted);
         var untransformedMousePosition = Vector3.TransformPosition(unprojectedMousePosition, viewInverted);
 
-        Console.WriteLine(untransformedMousePosition);
         return new Position2(untransformedMousePosition.Xy);
     }
 

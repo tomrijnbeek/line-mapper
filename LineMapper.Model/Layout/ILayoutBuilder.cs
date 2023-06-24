@@ -3,7 +3,7 @@ using System.Collections.Immutable;
 
 namespace LineMapper.Model.Layout;
 
-interface ILayoutBuilder
+public interface ILayoutBuilder
 {
     ImmutableArray<LaidOutLine> LayOutLines(IEnumerable<Line> lines);
 }

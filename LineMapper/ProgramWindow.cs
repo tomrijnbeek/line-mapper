@@ -2,7 +2,9 @@ using System;
 using Bearded.Graphics;
 using Bearded.Graphics.Windowing;
 using Bearded.UI.Controls;
+using Bearded.UI.Events;
 using Bearded.UI.Rendering;
+using Bearded.Utilities.Input;
 using Bearded.Utilities.IO;
 using LineMapper.Rendering.Rendering;
 using LineMapper.UI;
@@ -19,6 +21,8 @@ sealed class ProgramWindow : Window
     private RenderContext renderContext = null!;
     private IRendererRouter rendererRouter = null!;
     private RootControl rootControl = null!;
+    private InputManager inputManager = null!;
+    private EventManager eventManager = null!;
     // TODO: this shouldn't be here
     private Camera camera = null!;
 
@@ -43,11 +47,16 @@ sealed class ProgramWindow : Window
     {
         renderContext = RenderContext.Load();
 
+        camera = new Camera(logger);
+
         rendererRouter = ControlLibrary.InitializeRenderers(renderContext);
         rootControl = new RootControl();
-        rootControl.Add(new LayoutControl());
+        rootControl.Add(new LayoutControl(camera));
 
-        camera = new Camera(logger);
+#pragma warning disable CS0618
+        inputManager = new InputManager(NativeWindow);
+#pragma warning restore CS0618
+        eventManager = new EventManager(rootControl, inputManager);
     }
 
     protected override void OnResize(ResizeEventArgs eventArgs)
@@ -59,6 +68,8 @@ sealed class ProgramWindow : Window
 
     protected override void OnUpdate(UpdateEventArgs e)
     {
+        inputManager.Update(true);
+        eventManager.Update();
     }
 
     protected override void OnRender(UpdateEventArgs e)
