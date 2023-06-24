@@ -1,12 +1,15 @@
+using System;
 using Bearded.Utilities.IO;
+using Bearded.Utilities.SpaceTime;
 using OpenTK.Mathematics;
 
 namespace LineMapper.Rendering.Rendering;
 
-public sealed class Camera
+public sealed class Camera : IMousePositionTransform
 {
     private readonly Logger logger;
     private readonly float scale = 1;
+    private Vector2i viewportSize;
     private CenterAndSize visibleArea;
 
     private Matrix4 view;
@@ -15,7 +18,8 @@ public sealed class Camera
     public Camera(Logger logger)
     {
         this.logger = logger;
-        visibleArea = new CenterAndSize(0, 0, 1280, 720);
+        viewportSize = new Vector2i(1280, 720);
+        visibleArea = new CenterAndSize(0, 0, viewportSize.X, viewportSize.Y);
         recalculateView();
         recalculateProjection();
     }
@@ -48,17 +52,22 @@ public sealed class Camera
         settings.ProjectionMatrix.Value = projection;
     }
 
-    private readonly struct CenterAndSize
+    public Position2 ToWorldPosition(Vector2d mousePosition)
     {
-        public Vector2 Center { get; }
-        public Vector2 Size { get; }
+        var projectionInverted = projection.Inverted();
+        var viewInverted = view.Inverted();
 
+        var normalizedMousePosition = new Vector3(
+            2 * (float) mousePosition.X / viewportSize.X - 1, 2 * (float) mousePosition.Y / viewportSize.Y - 1, 0);
+        var unprojectedMousePosition = Vector3.TransformPerspective(normalizedMousePosition, projectionInverted);
+        var untransformedMousePosition = Vector3.TransformPosition(unprojectedMousePosition, viewInverted);
+
+        Console.WriteLine(untransformedMousePosition);
+        return new Position2(untransformedMousePosition.Xy);
+    }
+
+    private readonly record struct CenterAndSize(Vector2 Center, Vector2 Size)
+    {
         public CenterAndSize(float x, float y, float w, float h) : this(new Vector2(x, y), new Vector2(w, h)) {}
-
-        public CenterAndSize(Vector2 center, Vector2 size)
-        {
-            Center = center;
-            Size = size;
-        }
     }
 }
