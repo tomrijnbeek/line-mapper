@@ -12,7 +12,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Bearded.UI" Version="0.1.55-dev" />
+      <PackageReference Include="Bearded.UI" Version="0.2.0-dev.3" />
     </ItemGroup>
 
 </Project>
