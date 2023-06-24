@@ -25,7 +25,7 @@ sealed class LayoutControlRenderer : IRenderer<LayoutControl>
 
         foreach (var point in control.Points)
         {
-            stationDrawer.DrawStation(point, point == control.HoverPoint);
+            stationDrawer.DrawStation(point);
         }
     }
 }
