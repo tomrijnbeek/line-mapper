@@ -8,7 +8,7 @@ using OpenTK.Mathematics;
 
 namespace LineMapper.Model.Layout;
 
-public sealed class LimitedDirectionLayoutBuilder : ILayoutBuilder
+public sealed partial class LimitedDirectionLayoutBuilder : ILayoutBuilder
 {
     public static readonly ImmutableArray<Direction2> OctagonalDirections =
         Enumerable.Range(0, 8).Select(i => Direction2.FromDegrees(i * 45)).ToImmutableArray();
@@ -36,66 +36,24 @@ public sealed class LimitedDirectionLayoutBuilder : ILayoutBuilder
     private IEnumerable<LineSegment> createLineSegments(Line line)
     {
         var nodes = line.Nodes;
+        var sections = breakIntoSections(nodes);
+        var sectionDirections = findSectionDirections(sections);
+        sectionDirections = optimizeSectionDirections(sectionDirections);
+        return toLineSegments(sections, sectionDirections);
+    }
+
+    private ImmutableArray<Section> breakIntoSections(ImmutableArray<INode> nodes)
+    {
+        var result = ImmutableArray.CreateBuilder<Section>(nodes.Length - 1);
         for (var i = 0; i < nodes.Length - 1; i++)
         {
-            var isFirstSegment = i == 0;
-            var isLastSegment = i == nodes.Length - 2;
-
-            var start = nodes[i].Position;
-            var end = nodes[i + 1].Position;
-            var difference = end - start;
-            var direction = difference.Direction;
-
-            var (dirBefore, dirAfter) = findDirectionBucket(direction);
-
-            // If we already align with an allowed direction, just draw a straight segment.
-            if (direction - dirBefore < epsilonAngle || dirAfter - direction < epsilonAngle)
-            {
-                yield return createLineSegment(start, end, isFirstSegment, isLastSegment);
-                continue;
-            }
-
-            // TODO: there are few things we can cache here
-            var basisX = dirBefore.Vector;
-            var basisY = dirAfter.Vector;
-
-            var basisTransform = new Matrix2(basisX, basisY);
-            basisTransform.Invert();
-
-            var differenceInBasis = difference.NumericValue * basisTransform;
-
-            var bendOffset = new Difference2(dirBefore.Vector * differenceInBasis.X);
-            var bendPosition = start + bendOffset;
-
-            yield return createLineSegment(start, bendPosition, isFirstSegment, false);
-            yield return createLineSegment(bendPosition, end, false, isLastSegment);
+            result.Add(new Section(nodes[i].Position, nodes[i + 1].Position));
         }
+        return result.MoveToImmutable();
     }
 
-    private (Direction2 Before, Direction2 After) findDirectionBucket(Direction2 exactDirection)
+    private readonly record struct Section(Position2 Start, Position2 End)
     {
-        for (var i = 0; i < directions.Length; i++)
-        {
-            var dirBefore = directions[i];
-            var dirAfter = directions[(i + 1) % directions.Length];
-
-            if (exactDirection - dirBefore >= Angle.Zero && dirAfter - exactDirection > Angle.Zero)
-            {
-                return (dirBefore, dirAfter);
-            }
-        }
-
-        throw new Exception();
-    }
-
-    private static LineSegment createLineSegment(
-        Position2 start, Position2 end, bool removeArcStart, bool removeArcEnd)
-    {
-        var difference = end - start;
-        var offsetForArc = difference * (Constants.ArcRadius / difference.Length);
-        var segmentStart = removeArcStart ? start : start + offsetForArc;
-        var segmentEnd = removeArcEnd ? end : end - offsetForArc;
-
-        return new LineSegment(segmentStart, segmentEnd);
+        public Difference2 Difference => End - Start;
     }
 }
